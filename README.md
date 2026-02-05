@@ -1,1 +1,1 @@
-# Buenas_practicas2
+# Buenas-pr-cticas
