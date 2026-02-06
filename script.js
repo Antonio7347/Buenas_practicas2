@@ -21,19 +21,67 @@ function inicializar() {
     });
 }
 
+// Validaciones de entrada
+const VALIDACIONES = {
+    nombre: /^[a-záéíóúñA-ZÁÉÍÓÚÑ\s]{2,100}$/,
+    apellido: /^[a-záéúóíñA-ZÁÉÍÓÚÑ\s]{2,100}$/,
+    telefono: /^[0-9]{10}$/,
+    // CURP: 18 caracteres - 4 letras iniciales + 6 dígitos fecha (AAMMDD) + 1 sexo (H/M) + 5 caracteres entidad/consonantes + 2 verificadores
+    curp: /^[A-ZÑ]{4}\d{6}[HM][A-Z0-9]{5}[0-9A-Z]{2}$/,
+    email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+};
+
 // Función para guardar un registro
 function guardarRegistro() {
     // Obtener valores del formulario
-    var nombre = document.getElementById('nombre').value;
-    var apellido1 = document.getElementById('apellido1').value;
-    var apellido2 = document.getElementById('apellido2').value;
-    var telefono = document.getElementById('telefono').value;
-    var curp = document.getElementById('curp').value;
-    var email = document.getElementById('email').value;
+    var nombre = document.getElementById('nombre').value.trim();
+    var apellido1 = document.getElementById('apellido1').value.trim();
+    var apellido2 = document.getElementById('apellido2').value.trim();
+    var telefono = document.getElementById('telefono').value.trim();
+    var curp = document.getElementById('curp').value.trim();
+    var email = document.getElementById('email').value.trim();
     
-    // SEGURIDAD: Se valida que el nombre no esté vacío - mensaje genérico
+    // Validar nombre
     if (nombre == "") {
         alert("Por favor ingresa un nombre válido.");
+        return;
+    }
+    if (!VALIDACIONES.nombre.test(nombre)) {
+        alert("El nombre solo puede contener letras y espacios.");
+        return;
+    }
+    
+    // Validar apellido1
+    if (apellido1 == "") {
+        alert("Por favor ingresa el primer apellido.");
+        return;
+    }
+    if (!VALIDACIONES.apellido.test(apellido1)) {
+        alert("El apellido solo puede contener letras y espacios.");
+        return;
+    }
+    
+    // Validar apellido2 (opcional)
+    if (apellido2 != "" && !VALIDACIONES.apellido.test(apellido2)) {
+        alert("El segundo apellido solo puede contener letras y espacios.");
+        return;
+    }
+    
+    // Validar teléfono (opcional)
+    if (telefono != "" && !VALIDACIONES.telefono.test(telefono)) {
+        alert("El teléfono debe tener exactamente 10 dígitos.");
+        return;
+    }
+    
+    // Validar CURP (opcional)
+    if (curp != "" && !VALIDACIONES.curp.test(curp)) {
+        alert("El CURP tiene un formato inválido.");
+        return;
+    }
+    
+    // Validar email (opcional)
+    if (email != "" && !VALIDACIONES.email.test(email)) {
+        alert("El correo electrónico tiene un formato inválido.");
         return;
     }
     
